@@ -22,4 +22,6 @@ enum APIs:String {
 }
 
 
+private var baseURL = "https://jsonplaceholder.typicode.com/"
+
 
