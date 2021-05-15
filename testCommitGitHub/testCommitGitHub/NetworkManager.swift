@@ -7,6 +7,8 @@
 
 import Foundation
 
+class NetworkManager {
+    
 
 enum HTTPMethod:String {
     case POST
@@ -42,3 +44,4 @@ func getAllPosts(_ complitionHandler: @escaping ([Post]) -> Void) {
         }.resume()
     }
 
+}
