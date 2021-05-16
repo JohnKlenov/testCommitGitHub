@@ -10,7 +10,7 @@ import Foundation
 class NetworkManager {
     
 
-enum HTTPMethod:String {
+    enum HTTPMethod:String {
     case POST
     case GET
     case DELETE
@@ -44,4 +44,30 @@ func getAllPosts(_ complitionHandler: @escaping ([Post]) -> Void) {
         }.resume()
     }
 
+    
+    func postCreate(post:Post,_ comlitionHandler: @escaping (Post)-> Void) {
+        guard let url = URL(string: baseURL + APIs.posts.rawValue),
+              let data = try? JSONEncoder().encode(post) else {return}
+        
+        let request = MutableURLRequest(url: url)
+        request.httpMethod = HTTPMethod.POST.rawValue
+        request.httpBody = data
+        request.setValue("\(data.count)", forHTTPHeaderField: "Content-Lengh")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("error postCreate")
+            } else {
+                if let respServer = response as? HTTPURLResponse,
+                   respServer.statusCode == 201,
+                   let data = data {
+                    if let postServer = try? JSONDecoder().decode(Post.self, from: data) {
+                        comlitionHandler(postServer)
+                    }
+                }
+            }
+        }.resume()
+    }
+    
 }
