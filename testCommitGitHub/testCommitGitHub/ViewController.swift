@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+  
     
     var objectNM = NetworkManager()
     
@@ -36,7 +37,10 @@ class ViewController: UIViewController {
         }
     }
 
-
+    @IBAction func createPost(_ sender: Any) {
+        
+    }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
